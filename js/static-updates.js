@@ -16,7 +16,7 @@ let header =
 <div>
     <a href="../projects.html" id="projects">Projects</a>
     <a href="../blog.html" id="blog">Blog</a>
-    <a href="../about.html" id="about">About (CV)</a>
+    <a href="../about.html" id="about">About</a>
 </div>
 <a style="margin-right: 20px" href="../contact.html" id="contact">Contact</a>`
 
