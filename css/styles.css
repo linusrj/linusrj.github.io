@@ -30,6 +30,8 @@ header {
   height: 80px;
   backdrop-filter: blur(10px);
 
+  z-index: 10;
+
   position: sticky; 
   top: 0;
 }
@@ -106,7 +108,7 @@ img {
   width: 60vw;
   margin: 10px auto;
   padding: 20px;
-  background: linear-gradient(0deg, rgba(16,16,14,1) 0%, rgb(27, 27, 24) 100%); /*rgb(27, 27, 24);*/
+  background: linear-gradient(0deg, rgba(16,16,14,1) 0%, rgb(27, 27, 24) 100%);
   border-radius: 14px;
  
   display: flex;
@@ -118,7 +120,7 @@ img {
 
 .project-description {
   flex-grow: 1;
-  margin: 20px 20px 20px 20px;  /* up right down left */
+  margin: 20px;
 }
 
 .project-description > p {
@@ -137,10 +139,12 @@ img {
 }
 
 
-.project-collection {
+.project-card-group {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+
+  margin-bottom: 40px;
   
   width: 800px;
 }
@@ -165,25 +169,35 @@ img {
 
 .project-card a {
   color: white;
-  
 }
 
-.centered {
+.title-overlay {
   display: flex;
   flex-direction: column;
   justify-content: center;
   text-align: center;
 
-  transform: translate(0, -230%);
+  transform: translate(0, -100%);
+  z-index: 0;
 
   width: 360px;
-  height: 100px;
-  background-color:rgba(27, 27, 24, 0.7);
+  height: 80px;
+  background-color:rgba(27, 27, 24, 0.5);
   backdrop-filter: blur(10px);
-
 
   font-size: 30px;
   font-family: 'Satoshi-Medium';
+
+  border-radius: 0 0 14px 14px;
+}
+
+.project-collection {
+  margin-top: 40px;
+  display: flex; 
+  flex-direction: column; 
+  background: linear-gradient(0deg, rgba(16,16,14,1) 0%, rgb(27, 27, 24) 100%);
+  padding: 0 30px; 
+  border-radius:34px;
 }
 
 
