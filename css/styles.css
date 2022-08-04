@@ -200,24 +200,61 @@ img {
   border-radius:34px;
 }
 
+.article {
+  width: 50vw;
+  margin: 40px auto;
+}
+
+.article h1 {
+  font-size: 44px;
+}
+
+.article h2 {
+  font-size: 30px;
+}
+.article p {
+  font-size: 18px;
+}
+
+.article-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.article-header > * {
+  margin: auto 30px;
+  margin-bottom: 0;
+}
+
+hr {
+  margin-bottom: 20px;
+  border-top: 2px solid rgb(255,255,227);
+}
+
 
 .button {
+  display: flex;
   align-items: center;
+  text-align: center;
+
   background-color: transparent;
   border: 2px solid rgb(255,255,227);
   border-radius: .25rem;
   box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
   box-sizing: border-box;
   color: rgb(255,255,227);
+
   cursor: pointer;
   font-size: 20px;
   line-height: 1.25;
   min-height: 3rem;
   padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+
   text-decoration: none;
   transition: all 250ms;
   user-select: none;
   -webkit-user-select: none;
+  
   width: 100px;
   height: 100px;
   margin: auto 50px;
