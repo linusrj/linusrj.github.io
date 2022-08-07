@@ -5,7 +5,7 @@ document.getElementsByTagName('title')[0].innerHTML = pageID.charAt(0).toUpperCa
 
 // Update footer content
 document.getElementsByTagName('footer')[0].innerHTML = 
-`<p>Last updated: 2022-07-31</p></br>
+`<p>Last updated: 2022-08-07</p></br>
 <p>Engineering student @ Chalmers University of Technology</p>
 <p>& Embedded engineer @ Plejd AB</p></br>
 <p>Linus Johansson &copy; 2022</p>`
@@ -16,9 +16,8 @@ let header =
 <div>
     <a href="../projects.html" id="projects">Projects</a>
     <a href="../blog.html" id="blog">Blog</a>
-    <a href="../about.html" id="about">About</a>
 </div>
-<a style="margin-right: 20px" href="../contact.html" id="contact">Contact</a>`
+<a style="margin-right: 20px" href="../about.html" id="about">About</a>`
 
 // Indicate active page
 let parser = new DOMParser();
