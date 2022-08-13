@@ -55,7 +55,7 @@ footer {
   background: linear-gradient(0deg, rgba(16, 16, 14, 0.85) 0%, rgb(27, 27, 24) 100%);
   border-radius: 14px 14px 0 0;
   padding: 20px;
-  height: 200px;
+  height: 150px;
 }
 
 h1 {
@@ -76,7 +76,7 @@ img {
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 60vw;
+  width: 1200px;
   background: linear-gradient(0deg, rgba(16,16,14,1) 0%, rgb(27, 27, 24) 100%);
   border-radius: 14px;
   margin: 40px auto;
@@ -105,7 +105,7 @@ img {
 }
 
 .project-feature {
-  width: 60vw;
+  width: 1200px;
   margin: 10px auto;
   padding: 20px;
   background: linear-gradient(0deg, rgba(16,16,14,1) 0%, rgb(27, 27, 24) 100%);
@@ -236,7 +236,7 @@ img {
 
 
 .about-section {
-  width: 40vw;
+  width: 800px;
   background: linear-gradient(0deg, rgba(16,16,14,1) 0%, rgb(27, 27, 24) 100%);
   border-radius: 14px;
   margin: 40px auto;

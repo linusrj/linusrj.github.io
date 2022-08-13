@@ -5,9 +5,7 @@ document.getElementsByTagName('title')[0].innerHTML = pageID.charAt(0).toUpperCa
 
 // Update footer content
 document.getElementsByTagName('footer')[0].innerHTML = 
-`<p>Last updated: 2022-08-07</p></br>
-<p>Engineering student @ Chalmers University of Technology</p>
-<p>& Embedded engineer @ Plejd AB</p></br>
+`<p>Website last updated: 2022-08-13</p></br>
 <p>Linus Johansson &copy; 2022</p>`
 
 // Update header
