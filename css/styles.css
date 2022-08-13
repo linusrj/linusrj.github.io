@@ -203,6 +203,7 @@ img {
 .article {
   width: 50vw;
   margin: 40px auto;
+  flex: 1;
 }
 
 .article h1 {
@@ -250,6 +251,19 @@ img {
   border-radius: 14px;
 }
 
+.work-container {
+  display: flex;
+}
+
+.work-employment-date {
+  margin-left: 0;
+  width: 200px;
+}
+
+.work-description {
+  flex: 1;
+}
+
 
 
 .button {
@@ -294,6 +308,7 @@ img {
 
 a, a:hover {
 	text-decoration: none;
+  color: rgb(255,255,227);
 }
 .socialbtns {
   justify-content: center;
