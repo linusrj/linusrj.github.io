@@ -10,7 +10,7 @@ document.getElementsByTagName('footer')[0].innerHTML =
 
 // Update header
 let header = 
-`<a style="margin-left: 20px;" href="../index.html" id="index">Home</a>
+`<a style="margin-left: 20px;" href="/" id="home">Home</a>
 <div>
     <a href="../projects.html" id="projects">Projects</a>
     <a href="../blog.html" id="blog">Blog</a>
@@ -54,5 +54,10 @@ if (portrait.matches && screen.width < 500) {
 portrait.addEventListener("change", function(e) {
     if(e.matches) {
         showSnackbar()
+    }
+    else {
+        var x = document.getElementById("snackbar")
+        x.className = x.className.replace("show", "")
+        x.style.animationIterationCount = 1
     }
 })
