@@ -35,12 +35,24 @@ try {
 }
 document.getElementsByTagName('header')[0].innerHTML = htmlDoc.documentElement.innerHTML
 
-if ((screen.orientation.type === 'portrait-primary' || screen.orientation.type === 'portrait-secondary') && screen.width < 500) {
+function showSnackbar() {
     var x = document.getElementById("snackbar");
 
     // Add the "show" class to DIV
     x.className = "show";
 
-    // After 3 seconds, remove the show class from DIV
+    // After 5 seconds, remove the show class from DIV
     setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
 }
+
+let portrait = window.matchMedia("(orientation: portrait)");
+
+if (portrait.matches && screen.width < 500) {
+    showSnackbar()
+}
+
+portrait.addEventListener("change", function(e) {
+    if(e.matches) {
+        showSnackbar()
+    }
+})
