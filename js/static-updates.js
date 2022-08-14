@@ -35,7 +35,7 @@ try {
 }
 document.getElementsByTagName('header')[0].innerHTML = htmlDoc.documentElement.innerHTML
 
-if (screen.width < 500) {
+if (!(screen.orientation.angle % 180) && screen.width < 500) {
     var x = document.getElementById("snackbar");
 
     // Add the "show" class to DIV
@@ -44,10 +44,3 @@ if (screen.width < 500) {
     // After 3 seconds, remove the show class from DIV
     setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
 }
-
-
-/*// Update social links
-if(pageID === 'index') {
-    document.getElementById("github-link").href = "https://github.com/linusrj"
-    document.getElementById("linkedin-link").href = "https://www.linkedin.com/in/linus-johansson-b64941219/"
-}*/
