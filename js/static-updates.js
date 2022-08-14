@@ -35,7 +35,7 @@ try {
 }
 document.getElementsByTagName('header')[0].innerHTML = htmlDoc.documentElement.innerHTML
 
-if (!(screen.orientation.angle % 180) && screen.width < 500) {
+if ((screen.orientation.type === 'portrait-primary' || screen.orientation.type === 'portrait-secondary') && screen.width < 500) {
     var x = document.getElementById("snackbar");
 
     // Add the "show" class to DIV
