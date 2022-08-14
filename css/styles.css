@@ -345,22 +345,6 @@ a, a:hover {
 }
 
 
-
-/*
-font-family: 'Satoshi-Variable';
-font-family: 'Satoshi-VariableItalic';
-font-family: 'Satoshi-Light';
-font-family: 'Satoshi-LightItalic';
-font-family: 'Satoshi-Regular';
-font-family: 'Satoshi-Italic';
-font-family: 'Satoshi-Medium';
-font-family: 'Satoshi-MediumItalic';
-font-family: 'Satoshi-Bold';
-font-family: 'Satoshi-BoldItalic';
-font-family: 'Satoshi-Black';
-font-family: 'Satoshi-BlackItalic';
-*/
-
 ::-webkit-scrollbar {
   width: 12px;
 }
@@ -403,7 +387,6 @@ font-family: 'Satoshi-BlackItalic';
     width: 90vw;
   }
 }
-
 
 
 @media only screen and (max-width: 1400px) {
@@ -484,27 +467,51 @@ font-family: 'Satoshi-BlackItalic';
 }
 
 
-/* Extra large devices (large laptops and desktops, 1200px and up) 
-@media only screen and (min-width: 1200px) {
-  
+/* The snackbar */
+#snackbar {
+  display: flex;
+  flex-direction: column;
+  visibility: hidden;
+  width: 360px;
+  height: 340px;
+  margin-left: -230px;
+  font-size: 40px;
+  background-color: rgb(255, 225, 58);
+  color: rgb(16,16,14);
+  text-align: center;
+  border-radius: 14px;
+  padding: 16px;
+  position: fixed; /* Sit on top of the screen */
+  z-index: 1;
+  left: 240px; /* Center the snackbar */
+  top: 200px;
 }
 
-/* Large devices (laptops/desktops, 992px and up) 
-@media only screen and (min-width: 992px) {
-  
+#snackbar.show {
+  visibility: visible; /* Show the snackbar */
+  /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+  However, delay the fade out process for 4.5 seconds */
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 4.5s;
+  animation: fadein 0.5s, fadeout 0.5s 4.5s;
 }
 
-/* Medium devices (landscape tablets, 768px and up) 
-@media only screen and (min-width: 768px) {
-  
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+  from {top: 0; opacity: 0;}
+  to {top: 200px; opacity: 1;}
 }
 
-/* Small devices (portrait tablets and large phones, 600px and up) 
-@media only screen and (min-width: 600px) {
-  
+@keyframes fadein {
+  from {top: 0; opacity: 0;}
+  to {top: 200px; opacity: 1;}
 }
 
-/* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 600px) {
-  
+@-webkit-keyframes fadeout {
+  from {top: 200px; opacity: 1;}
+  to {top: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {top: 200px; opacity: 1;}
+  to {top: 0; opacity: 0;}
 }

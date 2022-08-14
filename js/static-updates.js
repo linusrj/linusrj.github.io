@@ -17,6 +17,11 @@ let header =
 </div>
 <a style="margin-right: 20px" href="../about.html" id="about">About</a>`
 
+var snackbar = document.createElement("div");
+snackbar.id = 'snackbar'
+snackbar.innerHTML = `<img src="../images/rotate-device.png" height="160px">Rotate your device for a better viewing experience`
+document.body.appendChild(snackbar)
+
 // Indicate active page
 let parser = new DOMParser();
 let htmlDoc = parser.parseFromString(header, 'text/html');  // Parse header string to html
@@ -29,6 +34,17 @@ try {
     
 }
 document.getElementsByTagName('header')[0].innerHTML = htmlDoc.documentElement.innerHTML
+
+if (screen.width < 500) {
+    var x = document.getElementById("snackbar");
+
+    // Add the "show" class to DIV
+    x.className = "show";
+
+    // After 3 seconds, remove the show class from DIV
+    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
+}
+
 
 /*// Update social links
 if(pageID === 'index') {
