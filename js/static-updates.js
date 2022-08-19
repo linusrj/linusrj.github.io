@@ -5,17 +5,23 @@ document.getElementsByTagName('title')[0].innerHTML = pageID.charAt(0).toUpperCa
 
 // Update footer content
 document.getElementsByTagName('footer')[0].innerHTML = 
-`<p>Website last updated: 2022-08-13</p></br>
+`<p>Website last updated: 2022-08-19</p></br>
 <p>Linus Johansson &copy; 2022</p>`
 
 // Update header
 let header = 
-`<a style="margin-left: 20px;" href="/" id="home">Home</a>
-<div>
+`
+<div style="margin-left: 20px;">
+    <a href="/" id="home">Home</a>
     <a href="../projects.html" id="projects">Projects</a>
     <a href="../blog.html" id="blog">Blog</a>
 </div>
-<a style="margin-right: 20px" href="../about.html" id="about">About</a>`
+<div style="margin-right: 20px">
+    <a href="../about.html" id="about">About</a>
+    <a href="../contact.html" id="contact">Contact</a>
+</div>
+`
+
 
 var snackbar = document.createElement("div");
 snackbar.id = 'snackbar'
@@ -52,10 +58,7 @@ if (portrait.matches && screen.width < 500) {
 }
 
 portrait.addEventListener("change", function(e) {
-    if(e.matches) {
-        showSnackbar()
-    }
-    else {
+    if(!e.matches) {
         var x = document.getElementById("snackbar")
         x.className = x.className.replace("show", "")
         x.style.animationIterationCount = 1
