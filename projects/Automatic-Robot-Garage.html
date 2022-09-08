@@ -7,6 +7,7 @@
         
         <link rel="stylesheet" type="text/css" href="../css/styles.css">
         <link rel="stylesheet" type="text/css" href="../css/satoshi.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
 
         <noscript>
             <meta http-equiv="refresh" content="0;url=noscript.html">
@@ -25,14 +26,140 @@
                 <p>Spring 2021 - Fall 2022</p>
             </div>
             <div class="divider"></div>
+
+            <div style="display: flex; flex-direction: column; width: 100%">
+                <img src="../images/ARG/garage.jpg" style="width: 70%;">
+            </div><br><br>
             
             <h2>Overview</h2><br>
             <p>
-                Automatic Robot Garage is a fun project that I started with my father to create a fancy garage to house his Husqvarna Automower.
+                Automatic Robot Garage (ARG) is a fun project that I started with my father to create a fancy garage to house his Husqvarna Automower.
                 He built the miniature garage and I put together the electronics and software for it.<br><br> 
                 The garage features a motor-controlled port, facade lighting and a connection to Husqvarna's cloud for live updates of the Automower's state.
-            </p>
+                It also features a web application for controlling the garage.
+            </p><br><br>
+
+            <div class="iframe-container">
+                <iframe width="2543" height="1128" src="https://www.youtube.com/embed/pUaHbKzoPkA" title="Automatic Robot Garage in action" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+
+
+            <h2>More details</h2><br>
+            <p>
+                After my father and I had heard of Husqvarna's developer portal and the fact that you can fetch live updates from your Automower, we figured 
+                that we had to make use of this somehow. And that was when we started this project with the aim to build a fully automatic garage for the 
+                Automower.<br><br>
                 
+                We split the work so that I would build the circuits and software while he built the garage. The building process began sometime around 
+                april 2021 and by the end of summer 2021 we let the garage run on its own. At this time we had the first working prototype of the 
+                electronics/software and the garage was completely built. Let's talk about the electronics and software.
+            </p><br><br>
+            
+            <h3>Electronics</h3><br>
+            <p>
+                For controlling the motorized port and the facade lighting there is a Raspberry Pi Zero W at 
+                the core of the electronics. The two main reasons for choosing a Raspberry Pi was rapid prototyping and making the garage standalone.
+                The aim was to build the first prototype as fast and easy as possible, not trying to make it a "real" product just yet. This meant that I did
+                not want to manage any external servers, for example hosting the web application or similarly. For simplicity, I wanted everything to stay 
+                on the local network for now. So by choosing a Raspberry Pi which is able to host its own web server and run a lot of software as well as 
+                controlling I/O's, I could make a lot of progress rapidly.<br><br>
+
+                For opening and closing the port I chose a regular Nema 17 stepper motor. They are cheap, powerful and easy to control. For driving the stepper
+                motor I went with the TMC2208, which is a silent and efficient stepper driver.<br>
+                The LEDs used for the facade lighting are WS2812b, also called Neopixel, LEDs. They are digital RGB LEDs that are just bright enough to work as 
+                facade lighting for the garage. With correct software these are also really easy to control.<br>
+                You are also supposed to connect two limit switches so that the software can tell whether the port is opened or closed. Other than this, 
+                there is not much else going on with the electronics. I tried to add a speaker driver to be able to play some tunes from small speakers that
+                we were going to put inside the garage, but the sound was too distorted so we abandoned that idea for now.<br><br>
+
+                After seeing that the electronics worked OK the first summer I decided to make a custom PCB that would be more robust than the hand-soldered version. I made
+                it sort of like a HAT for the Raspberry Pi Zero which you can see in the picture below. It has components on both sides, both through-hole and 
+                surface mounted.
+            </p><br><br>
+            
+
+            <div style="display: flex; flex-direction: column; width: 100%">
+                <img src="../images/ARG/comparison.jpg" style="width: 70%;">
+                <p><i>First prototype to the left and the PCB version to the right.</i></p>
+            </div><br><br>
+
+            <div style="display: flex; flex-direction: column; width: 100%">
+                <img src="../images/ARG/ARG_PCB.jpg" style="width: 60%;">
+                <p><i>2D view of the unpopulated PCB.</i></p>
+            </div><br><br>
+
+            <h3>Installation</h3><br>
+            <p>
+                Below are some photos of the complete installation.
+            </p><br>
+
+            <div style="display: flex; flex-direction: column; width: 100%">
+                <img src="../images/ARG/ARG_installation.png" style="width: 80%;">
+                <p><i>Top view of the insides of the garage. Image to the right shows lead screw and motor that opens/closes the port, limit switches and lights.</i></p>
+            </div><br><br>
+            <div style="display: flex; flex-direction: column; width: 100%">
+                <img src="../images/ARG/ARG_electronicsbox.JPG" style="width: 60%;">
+                <p><i>Electronics box.</i></p>
+            </div><br><br>
+
+            <h3>Software</h3><br>
+            <p>
+                The software is divided into separate scripts for each of the garage's tasks, e.g port control or lights automation. All of these scripts
+                are then run from the web server/app as subprocesses.<br><br>
+
+                The code that connects the garage to Husqvarna's cloud is made as a kind of add-on module for the garage. The thinking behind this was that anyone
+                with a robotic lawn mower can make use of ARG and then choose to include or exclude that module depending on if they have a connected Husqvarna automower
+                or not.<br>
+                The connect module and especially its' automation script is the most fun part of the software. The garage really does not do much
+                without it. What it does is basically open the port when the automower wants to come home, then closes it while it is in the garage. When the 
+                automower wants to go out again, the port opens and then closes when the mower is mowing.
+            </p><br>
+
+            <div style="display: flex; flex-direction: row; align-items: center;">
+                <p style="width: 70%; margin-left: 0">
+                    I will not go into much more detail on how it is all put together so if you are interested,
+                    the code for ARG is available on my GitHub profile. Just click the icon the right to go directly to the repository.
+                </p>
+                
+                <a href="https://github.com/linusrj/automatic-robot-garage"><i style="font-size: 60px;" title="linusrj/automatic-robot-garage - GitHub" class="devicon-github-original-wordmark"></i></a><br><br>
+            </div><br><br>
+            
+            <p>
+                As mentioned previously, the garage is controlled through a web application. Have a look at the video and images below to see what that looks like.
+            </p><br><br>
+            
+            <div class="iframe-container">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/FW484zUeGtY" title="Automatic Robot Garage Web App *DEMO*" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>                
+
+            <p>
+                The video demonstrates what the desktop version of the web app looks like, but it is responsive and works just as good on any phone or tablet.<br>
+                I spent a reasonable amount of time on user experience in the web application, and in my opinion it is not bad but it might not be the best either.
+                However, it does its' job.
+            </p><br><br>
+            
+            <div style="display: flex; flex-direction: column; width: 100%">
+                <img src="../images/ARG/ARG_webapp.png" style="width: 70%;">
+                <p><i>Tablet and phone view.</i></p>
+            </div><br><br>
+
+            <div style="display: flex; flex-direction: column; width: 100%">
+                <img src="../images/ARG/ARG_party.gif" style="width: 80%;">
+                <p><i>Party mode </i>🥳</p>
+            </div><br><br>
+
+            <p>
+                Thank you for reading!
+            </p><br><br>
+
+            <h2>Languages used</h2><br>
+            <div style="font-size: 60px">
+                <i title="Python" class="devicon-python-plain-wordmark colored"></i>
+                <i title="HTML5" class="devicon-html5-plain-wordmark colored"></i>
+                <i title="CSS3" class="devicon-css3-plain-wordmark colored"></i>
+                <i title="JavaScript" class="devicon-javascript-plain colored"></i>
+            </div>
+
         </div>
 
         <footer></footer>
