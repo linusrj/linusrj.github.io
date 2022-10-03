@@ -46,11 +46,11 @@
 
             <h2>More details</h2><br>
             <p>
-                We started this project with the aim to build a fully automatic garage for the Automower.<br><br>
-                
-                We split the work so that I would build the circuits and software while he built the garage. The building process began sometime around 
-                april 2021 and by the end of summer 2021 we let the garage run on its own. At this time we had the first working prototype of the 
-                electronics/software and the garage was completely built. Let's talk about the electronics and software.
+                We started this project with the aim to build a fully automatic garage for the Automower, meaning the garage should have a port that opens and closes troughout the day to let the Automower in to or out 
+                of the garage.<br><br>
+                The building process began sometime around april 2021 and by the end of summer that year we had the garage completely built. At this time all was working great, except I had not implemented the 
+                connection to Husqvarna's cloud yet. This meant that the garage would open once in the morning, stay open all day and then close in the evening. Since this was not what we wanted there was still some work to do.
+                By the end of summer 2022 we were able to let the garage run completely on its own, opening and closing the port automatically throughout the day with the help of live updates from the Automower.
             </p><br><br>
             
             <h3>Electronics</h3><br>
@@ -125,7 +125,9 @@
             -->
 
             <p>
-                As mentioned previously, the garage is controlled through a web application. Have a look at the video and images below to see what that looks like.
+                As mentioned previously, the garage is controlled through a web application (built with Python Flask). The web application is mostly for setting up the garage, so it is not really needed once everything is working as it should.
+                However it features a dashboard which allows the user to manually open/close the port, turn the lights on/off or even view the Automower's latest update. Have a look at the video and images below to see what it 
+                looks like.
             </p><br><br>
             
             <div class="iframe-container">
@@ -133,7 +135,7 @@
             </div>                
 
             <p>
-                The video demonstrates what the desktop version of the web app looks like, but it is responsive and works just as good on any phone or tablet.<br>
+                The video demonstrates what the desktop version of the web app looks like, but it is responsive and works just as good on any phone or tablet. I built it from scratch with vanilla HTML and CSS.<br>
                 I spent a reasonable amount of time on user experience in the web application, and in my opinion it is not bad but it might not be the best either.
                 However, it does its' job.
             </p><br><br>
@@ -157,7 +159,6 @@
                 <i title="Python" class="devicon-python-plain-wordmark colored"></i>
                 <i title="HTML5" class="devicon-html5-plain-wordmark colored"></i>
                 <i title="CSS3" class="devicon-css3-plain-wordmark colored"></i>
-                <i title="JavaScript" class="devicon-javascript-plain colored"></i>
             </div>
 
         </div>
