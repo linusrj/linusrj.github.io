@@ -1,111 +1,725 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
-        <link rel="stylesheet" type="text/css" href="css/styles.css">
-        <link rel="stylesheet" type="text/css" href="css/satoshi.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Travel Journal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* A new, fun and aesthetic style with seasonal themes */
+        :root {
+            --text-color: #44403c;
+            --header-text-color: #1f2937;
+            --subheader-text-color: #a8a29e;
+            --day-card-shadow: 0 0 40px -10px rgba(0, 0, 0, 0.15);
+            --day-content-bg: #ffffff;
+            --separator-color: #f5f5f4;
+            --checkbox-border: #e7e5e4;
+            --add-btn-color: #9ca3af;
+            --add-btn-border: #d1d5db;
+            --modal-bg: white;
+            --menu-bg: white;
+            --menu-hover-bg: #f3f4f6;
 
-        <noscript>
-            <meta http-equiv="refresh" content="0;url=noscript.html">
-        </noscript>
+            /* Default Theme: Summer */
+            --day-card-bg-1: #fff7ed; /* Orange */
+            --day-card-bg-2: #fefce8; /* Yellow */
+            --day-card-bg-3: #fee2e2; /* Red */
+            --day-card-bg-4: #eff6ff; /* Sky */
+            --checkbox-checked-bg: #f97316; /* Orange */
+            --add-btn-hover-bg: #fffbeb;
+            --add-btn-hover-color: #f97316;
+        }
 
-        <title></title>
-    </head>
+        body.theme-autumn {
+            --day-card-bg-1: #fef2e8; /* Light Orange */
+            --day-card-bg-2: #fecaca; /* Light Red */
+            --day-card-bg-3: #fae8ff; /* Light Plum */
+            --day-card-bg-4: #fef9c3; /* Light Yellow */
+            --checkbox-checked-bg: #dc2626; /* Red */
+            --add-btn-hover-bg: #fee2e2;
+            --add-btn-hover-color: #dc2626;
+        }
 
-    <body id="home">
-        <header></header>
+        body.theme-spring {
+            --day-card-bg-1: #fce7f3; /* Pink */
+            --day-card-bg-2: #ecfdf5; /* Mint Green */
+            --day-card-bg-3: #f0f9ff; /* Light Sky Blue */
+            --day-card-bg-4: #fefce8; /* Light Yellow */
+            --checkbox-checked-bg: #db2777; /* Pink */
+            --add-btn-hover-bg: #fce7f3;
+            --add-btn-hover-color: #db2777;
+        }
 
-        <div class="introduction-section">
-            <div style="display: flex; align-items: center; width: 100%">
-                <div style="width: 40%; margin-right: 3%">
-                    <h1>Hello and </br>welcome!</h1>
-                    <h2>My name is Linus and I'm a 22 year old engineering student from Sweden.</h2>
-                    <h2>Feel free to browse my site and learn a little about me and what I do.</h2>
-                </div>
-                <img src="images/picofme.jpg" height="300px">
-                <div class="socialbtns">
-                    <ul>
-                        <h3>GitHub</h3>
-                        <li><a target="_blank" id="github-link" class="fa fa-lg fa-github" href="https://github.com/linusrj"></a></li>
-                        <h3>LinkedIn</h3>
-                        <li><a target="_blank" id="linkedin-link" class="fa fa-lg fa-linkedin" href="https://www.linkedin.com/in/linus-johansson-b64941219/"></a></li>
-                    </ul>
-                </div>
+        body.theme-winter {
+            --day-card-bg-1: #e0e7ff; /* Indigo */
+            --day-card-bg-2: #e2e8f0; /* Slate */
+            --day-card-bg-3: #f3e8ff; /* Purple */
+            --day-card-bg-4: #e0f2fe; /* Sky */
+            --checkbox-checked-bg: #3b82f6; /* Blue */
+            --add-btn-hover-bg: #e0e7ff;
+            --add-btn-hover-color: #3b82f6;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #fdfdfd;
+            color: var(--text-color);
+        }
+
+        .main-header { position: relative; padding-top: 3rem; padding-bottom: 3rem; }
+        .main-header h1 { font-weight: 700; font-size: 2.5rem; color: var(--header-text-color); outline: none; }
+        .main-header p { color: var(--subheader-text-color); outline: none; }
+
+        /* Day Card styles */
+        .day-card {
+            border-radius: 1.5rem;
+            padding: 1rem;
+            margin-bottom: 2.5rem;
+            box-shadow: var(--day-card-shadow);
+            position: relative;
+        }
+        .day-card-1 { background-color: var(--day-card-bg-1); }
+        .day-card-2 { background-color: var(--day-card-bg-2); }
+        .day-card-3 { background-color: var(--day-card-bg-3); }
+        .day-card-4 { background-color: var(--day-card-bg-4); }
+
+        .day-header-container { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; cursor: pointer; }
+        .day-header-content { display: flex; align-items: center; gap: 0.5rem; flex-grow: 1; }
+        .day-header { flex-grow: 1; font-size: 1.75rem; font-weight: 700; padding: 1rem 0; outline: none; color: var(--header-text-color); }
+        .collapse-icon { transition: transform 0.3s ease-in-out; margin-bottom: 1rem; }
+        .day-card.collapsed .collapse-icon { transform: rotate(-90deg); }
+
+        .day-content { background-color: var(--day-content-bg); border-radius: 1rem; padding: 2rem; transition: all 0.3s ease-in-out; overflow: hidden; }
+        .day-card.collapsed .day-content { padding-top: 0; padding-bottom: 0; max-height: 0px; opacity: 0; }
+
+        .destination-block { position: relative; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--separator-color); }
+        .destination-block:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+        .destination-header { font-size: 1.5rem; font-weight: 600; color: var(--header-text-color); margin-bottom: 1rem; outline: none; }
+
+        /* Checklist styles */
+        .checklist { list-style: none; padding: 0; }
+        .checklist li { display: flex; align-items: flex-start; margin-bottom: 1rem; padding: 0.75rem; border-radius: 0.75rem; transition: background-color 0.2s ease-in-out; }
+        .checklist li:hover { background-color: var(--add-btn-hover-bg); }
+
+        .checkbox-wrapper { cursor: pointer; display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; margin-right: 1rem; margin-top: 0.25rem; border: 2px solid var(--checkbox-border); border-radius: 50%; flex-shrink: 0; transition: all 0.2s; }
+        .checklist li.completed .checkbox-wrapper { background-color: var(--checkbox-checked-bg); border-color: var(--checkbox-checked-bg); }
+        .checklist li.completed .checkbox-wrapper svg { display: block; }
+
+        .item-text-wrapper { display: flex; flex-direction: column; width: 100%; }
+        .item-text, .item-description { transition: color 0.2s; line-height: 1.4; outline: none; }
+        .item-text { font-size: 1rem; font-weight: 500; }
+        .item-description { font-size: 0.9rem; color: var(--subheader-text-color); font-weight: 400; }
+        .checklist li.completed .item-text, .checklist li.completed .item-description { text-decoration: line-through; color: var(--subheader-text-color); }
+
+        /* Edit Mode Styles */
+        .edit-controls { display: none; }
+        body.edit-mode .edit-controls { display: flex; }
+
+        [contenteditable="true"] { background-color: var(--add-btn-hover-bg); box-shadow: 0 0 0 2px var(--checkbox-checked-bg); border-radius: 5px; padding: 0 4px; }
+        [contenteditable="true"][placeholder]:empty:before { content: attr(placeholder); color: var(--subheader-text-color); pointer-events: none; display: block; }
+
+        .actions { align-items: center; margin-left: auto; padding-left: 1rem; }
+        .action-btn { background: none; border: none; cursor: pointer; padding: 0.25rem; color: #d1d5db; transition: color 0.2s; }
+        .action-btn:hover { color: #9ca3af; }
+        .delete-btn:hover { color: #ef4444; }
+
+        .add-btn {
+            background-color: transparent; border: 2px dashed var(--add-btn-border); color: var(--add-btn-color); width: 100%; padding: 0.75rem;
+            border-radius: 0.75rem; margin-top: 1rem; font-weight: 500; cursor: pointer; transition: all 0.2s;
+        }
+        .add-btn:hover { border-color: var(--add-btn-hover-color); color: var(--add-btn-hover-color); background-color: var(--add-btn-hover-bg); }
+        .add-btn:disabled { cursor: not-allowed; opacity: 0.5; }
+
+        .delete-day-btn { position: absolute; top: 1.5rem; right: 1.5rem; }
+        .delete-destination-btn { position: absolute; top: 2.5rem; right: 0; }
+        .destination-block:first-child .delete-destination-btn { top: 0.5rem; }
+
+        .add-day-btn {
+            background-color: var(--header-text-color); color: white; border: none; width: 100%; padding: 1rem; border-radius: 1.5rem;
+            font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: background-color 0.2s;
+        }
+        .add-day-btn:hover { background-color: var(--text-color); }
+
+        body.edit-mode .day-header-container { cursor: default; }
+        body.edit-mode .collapse-icon { display: none; }
+        body.edit-mode .day-card.collapsed .day-content { padding-top: 2rem; padding-bottom: 2rem; max-height: 10000px; opacity: 1; }
+
+        /* Hamburger Menu */
+        .menu-btn {
+            position: fixed; top: 20px; right: 20px; z-index: 1001;
+            background-color: var(--menu-bg); border-radius: 50%; width: 50px; height: 50px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+        }
+        .hamburger-menu {
+            position: fixed; top: 0; right: 0; bottom: 0;
+            width: 300px; background-color: var(--menu-bg); z-index: 1000;
+            transform: translateX(100%); transition: transform 0.3s ease-in-out;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+            padding: 80px 20px 20px;
+            display: flex; flex-direction: column;
+        }
+        .hamburger-menu.open { transform: translateX(0); }
+        .menu-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.4); z-index: 999;
+            opacity: 0; visibility: hidden; transition: opacity 0.3s;
+        }
+        .hamburger-menu.open + .menu-overlay { opacity: 1; visibility: visible; }
+        .menu-item { display: flex; align-items: center; padding: 1rem; font-size: 1.1rem; font-weight: 500; color: var(--text-color); border-radius: 0.5rem; cursor: pointer; }
+        .menu-item:hover { background-color: var(--menu-hover-bg); }
+        .menu-item svg { margin-right: 1rem; color: var(--subheader-text-color); }
+        .menu-item .switch { margin-left: auto; }
+        .switch { position: relative; display: inline-block; width: 50px; height: 28px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 28px; }
+        .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--checkbox-checked-bg); }
+        input:checked + .slider:before { transform: translateX(22px); }
+
+        .theme-picker { padding: 1rem; }
+        .theme-picker h3 { font-weight: 600; margin-bottom: 0.5rem; }
+        .theme-select {
+            width: 100%;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            border: 1px solid var(--add-btn-border);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Nunito', sans-serif;
+            font-size: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        #clear-btn:hover { background-color: #fee2e2; color: #ef4444; }
+        #clear-btn:hover svg { color: #ef4444; }
+        .menu-footer {
+            margin-top: auto;
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #d1d5db;
+        }
+
+        /* Custom Modals */
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 1002; opacity: 0; visibility: hidden; transition: all 0.3s; backdrop-filter: blur(5px); }
+        .modal-overlay.visible { opacity: 1; visibility: visible; }
+        .modal-content { background: var(--modal-bg); padding: 2rem; border-radius: 1rem; text-align: center; max-width: 90%; width: 400px; color: var(--text-color); }
+        .modal-content h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; }
+        .modal-content p { color: var(--subheader-text-color); margin-bottom: 1.5rem; }
+        .modal-buttons { display: flex; justify-content: center; gap: 1rem; }
+        .modal-btn { padding: 0.75rem 1.5rem; border-radius: 0.5rem; border: none; font-weight: 600; cursor: pointer; }
+        .confirm-btn { background-color: #ef4444; color: white; }
+        .cancel-btn, .info-ok-btn { background-color: #e5e7eb; color: #374151;}
+
+        /* Rating */
+        .rating-stars { display: flex; gap: 0.25rem; margin-top: 0.5rem; }
+        .rating-stars span { cursor: pointer; font-size: 1.5rem; color: #e5e7eb; }
+        .rating-stars span.filled { color: #f59e0b; }
+    </style>
+</head>
+<body class="">
+
+    <header class="main-header text-center">
+        <h1 id="main-title"></h1>
+        <p id="main-subtitle" class="text-lg"></p>
+    </header>
+
+    <main class="container mx-auto px-4 pb-12 pt-8">
+        <!-- Day cards will be rendered here by JavaScript -->
+    </main>
+
+    <div class="container mx-auto px-4 pb-12 edit-controls">
+        <button class="add-day-btn">+ Add New Day</button>
+    </div>
+
+    <button class="menu-btn" id="menu-btn">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+    </button>
+    <nav class="hamburger-menu" id="hamburger-menu">
+        <div>
+            <div class="menu-item">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.536L16.732 3.732z"></path></svg></svg>
+                <span>Edit Mode</span>
+                <label class="switch">
+                    <input type="checkbox" id="edit-mode-toggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="menu-item" id="export-btn">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                <span>Export Trip</span>
+            </div>
+            <div class="menu-item" id="import-btn">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                <span>Import Trip</span>
+            </div>
+            <div class="theme-picker">
+                <h3>Theme</h3>
+                <select id="theme-select" class="theme-select">
+                    <option value="theme-summer">Summer</option>
+                    <option value="theme-autumn">Autumn</option>
+                    <option value="theme-spring">Spring</option>
+                    <option value="theme-winter">Winter</option>
+                </select>
+            </div>
+            <div class="menu-item" id="clear-btn">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                <span>Clear Journal</span>
             </div>
         </div>
+        <p class="menu-footer">Version 1.0.0, created by Google Gemini, vibe coded together with linusrj, 2025-08-11</p>
+    </nav>
+    <div class="menu-overlay" id="menu-overlay"></div>
 
-        <div class="project-section">
-            <h1>Some projects I've done</h1>
-            
-            <!--<div class="project-feature">
-                <img src="images/MicroGUI/MicroGUI.jpg" height="250px"> 
-                <div style="display:flex;">
-                    <div class="project-description">
-                        <h2>MicroGUI</h2>
-                        <p>
-                            Learning how to program touch displays as well as creating good looking and functional graphical user interfaces (GUI) is not 
-                            the easiest of tasks. MicroGUI was created to lower the entry barrier for those who want to implement displays in their embedded projects. <br><br>
-                            MicroGUI is an open-source toolset for easily creating GUIs and quickly deploying them on embedded displays. 
-                        </p>
-                    </div>
-                    <div class="project-more">
-                        <p>Summer 2022</p>
-                        <a class="button" href="projects/MicroGUI.html">Read more</a>
-                        </br>
-                    </div>
-                </div>
-                
-            </div>-->
+    <input type="file" id="import-uploader" class="hidden" accept=".json,application/json">
 
-            <div class="project-feature">
-                <img src="images/MARV-5G/marv.jpg" height="250px">
-                <div style="display:flex;">
-                    <div class="project-description">
-                        <h2>Safe Remote Control Solution for MARV with 5G</h2>
-                        <p>
-                            MARV, short for <i>Marine Autonomous Reasearch Vehicle</i>, is a modified personal watercraft that is used in many research projects
-                            at Chalmers. It was of interest to know whether a robust and fast data link could be established between MARV and a computer stationed on land.<br><br>
-                            A remote control solution with real-time camera feed was implemented for MARV to demonstrate the possibilities of 5G.
-                        </p>
-                    </div>
-                    <div class="project-more">
-                        <p>Winter 2022 - Spring 2022</p>
-                        <a class="button" href="projects/MARV-5G.html">Read more</a>
-                        </br>
-                    </div>
-                </div>
-
+    <!-- Modals -->
+    <div id="confirm-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3 id="confirm-title">Are you sure?</h3>
+            <p id="confirm-text">This action cannot be undone.</p>
+            <div class="modal-buttons">
+                <button id="cancel-btn" class="modal-btn cancel-btn">Cancel</button>
+                <button id="confirm-btn-action" class="modal-btn confirm-btn">Delete</button>
             </div>
-
-            <div class="project-feature">
-                <img src="images/ARG/garage.jpg" height="250px">
-                <div style="display:flex;">
-                    <div class="project-description">
-                        <h2>Automatic Robot Garage</h2>
-                        <p>
-                            Automatic Robot Garage (ARG) is a fun project that I started with my father to create a fancy garage to house his Husqvarna Automower.
-                            He built the miniature garage and I put together the electronics and software for it.<br><br> 
-                            The garage features a motor-controlled port, facade lighting and a connection to Husqvarna's cloud for live updates of the Automower's state.
-                            It also features a web application for controlling the garage.
-                        </p>
-                    </div>
-                    <div class="project-more">
-                        <p>Spring 2021 - Fall 2022</p>
-                        <a class="button" href="projects/Automatic-Robot-Garage.html">Read more</a>
-                        </br>
-                    </div>
-                </div>
-
-            </div>
-
         </div>
+    </div>
+    <div id="info-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3 id="info-title">Cannot Delete</h3>
+            <p id="info-text">Please remove all activities first.</p>
+            <div class="modal-buttons">
+                <button id="info-ok-btn" class="modal-btn info-ok-btn">OK</button>
+            </div>
+        </div>
+    </div>
 
-        <footer></footer>
+    <script>
+        const appPrefix = "myTripJournal-v14-";
+        let currentlyEditing = null;
 
-        <script src="js/static-updates.js"></script>
-    </body>
+        const initialData = {
+            title: 'My Travel Journal',
+            subtitle: 'Plan your next adventure!',
+            days: [
+                {
+                    id: 'day-1', title: 'Day 1: Arrival & Exploration', colorClass: 'day-card-1', isCollapsed: false,
+                    destinations: [{
+                        id: 'dest-1', title: '📍 Example Destination', activities: [
+                            { id: 'activity-1', text: 'Explore the main square', description: 'Find a nice cafe and enjoy the atmosphere.', completed: false, rating: 0 },
+                        ]
+                    }]
+                }
+            ]
+        };
+
+        const clearedData = {
+            title: 'Untitled Trip',
+            subtitle: 'Where to next?',
+            days: []
+        };
+
+        const dayColorPalette = ['day-card-1', 'day-card-2', 'day-card-3', 'day-card-4'];
+
+        function getTripData() { return JSON.parse(localStorage.getItem(appPrefix + 'tripData')) || initialData; }
+        function saveTripData(data) { localStorage.setItem(appPrefix + 'tripData', JSON.stringify(data)); }
+
+        function render() {
+            const tripData = getTripData();
+            document.getElementById('main-title').innerText = tripData.title;
+            document.getElementById('main-subtitle').innerText = tripData.subtitle;
+            const main = document.querySelector('main');
+            main.innerHTML = '';
+
+            tripData.days.forEach((day, index) => {
+                const dayCard = document.createElement('div');
+                dayCard.className = `day-card ${day.colorClass} ${day.isCollapsed ? 'collapsed' : ''}`;
+                dayCard.dataset.dayId = day.id;
+
+                let destinationsHTML = day.destinations.map(destination => `
+                    <div class="destination-block" data-destination-id="${destination.id}">
+                        <button class="action-btn delete-btn delete-destination-btn edit-controls"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
+                        <h3 class="destination-header">${destination.title}</h3>
+                        <ul class="checklist">
+                            ${destination.activities.map(activity => `
+                                <li id="${activity.id}" class="${activity.completed ? 'completed' : ''}">
+                                    <div class="checkbox-wrapper"><svg class="hidden w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></div>
+                                    <div class="item-text-wrapper">
+                                        <span class="item-text" placeholder="New Activity Name">${activity.text}</span>
+                                        <span class="item-description" placeholder="Add a description...">${activity.description}</span>
+                                        ${activity.completed ? `
+                                            <div class="rating-stars" data-activity-id="${activity.id}">
+                                                ${[1,2,3,4,5].map(i => `<span class="star ${i <= (activity.rating || 0) ? 'filled' : ''}" data-value="${i}">★</span>`).join('')}
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                    <div class="actions edit-controls">
+                                        <button class="action-btn delete-btn delete-activity-btn"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
+                                    </div>
+                                </li>
+                            `).join('')}
+                        </ul>
+                        <button class="add-btn add-activity-btn edit-controls" data-destination-id="${destination.id}">+ Add New Activity</button>
+                    </div>
+                `).join('');
+
+                dayCard.innerHTML = `
+                    <div class="day-header-container">
+                        <div class="day-header-content">
+                            <div class="edit-controls flex-col">
+                                <button class="action-btn move-day-up-btn ${index === 0 ? 'invisible' : ''}"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg></button>
+                                <button class="action-btn move-day-down-btn ${index === tripData.days.length - 1 ? 'invisible' : ''}"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
+                            </div>
+                            <h2 class="day-header">${day.title}</h2>
+                        </div>
+                        <svg class="w-6 h-6 collapse-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                    <button class="action-btn delete-btn delete-day-btn edit-controls"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
+                    <div class="day-content">
+                        ${destinationsHTML}
+                        <button class="add-btn add-destination-btn edit-controls" data-day-id="${day.id}">+ Add New Destination</button>
+                    </div>
+                `;
+                main.appendChild(dayCard);
+            });
+            addEventListeners();
+            toggleEditMode(document.getElementById('edit-mode-toggle').checked);
+            document.getElementById('theme-select').value = localStorage.getItem(appPrefix + 'theme') || 'theme-summer';
+        }
+
+        function addEventListeners() {
+            document.querySelectorAll('.checkbox-wrapper').forEach(el => el.onclick = (e) => handleCheck(e.currentTarget.parentElement.id));
+            document.querySelectorAll('.delete-activity-btn').forEach(el => el.onclick = (e) => { e.stopPropagation(); handleDeleteActivity(e.currentTarget.closest('li').id); });
+            document.querySelectorAll('.delete-destination-btn').forEach(el => el.onclick = (e) => { e.stopPropagation(); handleDeleteDestination(e.currentTarget.closest('.destination-block').dataset.destinationId); });
+            document.querySelectorAll('.delete-day-btn').forEach(el => el.onclick = (e) => { e.stopPropagation(); handleDeleteDay(e.currentTarget.closest('.day-card').dataset.dayId); });
+            document.querySelectorAll('.add-activity-btn').forEach(el => el.onclick = (e) => handleAddActivity(e.currentTarget.dataset.destinationId));
+            document.querySelectorAll('.add-destination-btn').forEach(el => el.onclick = (e) => handleAddDestination(e.currentTarget.dataset.dayId));
+            document.querySelectorAll('.day-header').forEach(el => el.onblur = (e) => saveDayTitle(e.currentTarget));
+            document.querySelectorAll('.destination-header').forEach(el => el.onblur = (e) => saveDestinationTitle(e.currentTarget));
+            document.querySelectorAll('.move-day-up-btn').forEach(el => el.onclick = (e) => handleMoveDay(e.currentTarget.closest('.day-card').dataset.dayId, 'up'));
+            document.querySelectorAll('.move-day-down-btn').forEach(el => el.onclick = (e) => handleMoveDay(e.currentTarget.closest('.day-card').dataset.dayId, 'down'));
+            document.querySelectorAll('.rating-stars span').forEach(el => el.onclick = (e) => {
+                e.stopPropagation();
+                handleRating(e.currentTarget.parentElement.dataset.activityId, e.currentTarget.dataset.value);
+            });
+            document.querySelectorAll('.day-header-container').forEach(el => el.onclick = (e) => {
+                if (document.body.classList.contains('edit-mode') && (e.target.classList.contains('day-header') || e.target.closest('.edit-controls'))) {
+                    return;
+                }
+                handleCollapseDay(e.currentTarget.closest('.day-card').dataset.dayId);
+            });
+            document.querySelectorAll('.item-text, .item-description').forEach(el => el.onblur = (e) => saveActivityText(e.currentTarget));
+        }
+
+        function handleCheck(activityId) {
+            if (document.body.classList.contains('edit-mode')) return;
+            const tripData = getTripData();
+            const activity = findActivity(tripData, activityId);
+            if (!activity) return;
+            activity.completed = !activity.completed;
+            if (!activity.completed) activity.rating = 0;
+            saveTripData(tripData);
+            render();
+        }
+
+        function handleRating(activityId, rating) {
+            const tripData = getTripData();
+            const activity = findActivity(tripData, activityId);
+            if (activity) {
+                activity.rating = parseInt(rating);
+                saveTripData(tripData);
+                render();
+            }
+        }
+
+        function handleCollapseDay(dayId) {
+            const tripData = getTripData();
+            const day = tripData.days.find(d => d.id === dayId);
+            if (day) {
+                day.isCollapsed = !day.isCollapsed;
+                saveTripData(tripData);
+                render();
+            }
+        }
+
+        function saveActivityText(element) {
+            const li = element.closest('li');
+            if (!li) return;
+            const tripData = getTripData();
+            const activity = findActivity(tripData, li.id);
+            if (activity) {
+                const newText = li.querySelector('.item-text').innerText;
+                const newDesc = li.querySelector('.item-description').innerText;
+                activity.text = newText;
+                activity.description = newDesc;
+                saveTripData(tripData);
+            }
+        }
+
+        function saveDayTitle(headerElement) {
+            const dayId = headerElement.closest('.day-card').dataset.dayId;
+            const tripData = getTripData();
+            const day = tripData.days.find(d => d.id === dayId);
+            if (day && day.title !== headerElement.innerText) { day.title = headerElement.innerText; saveTripData(tripData); }
+        }
+
+        function saveDestinationTitle(headerElement) {
+            const destId = headerElement.closest('.destination-block').dataset.destinationId;
+            const tripData = getTripData();
+            const dest = findDestination(tripData, destId);
+            if (dest && dest.title !== headerElement.innerText) { dest.title = headerElement.innerText; saveTripData(tripData); }
+        }
+
+        function handleDeleteActivity(activityId) {
+            showConfirmModal('Delete this activity?', 'This cannot be undone.', () => {
+                const tripData = getTripData();
+                tripData.days.forEach(day => day.destinations.forEach(dest => {
+                    dest.activities = dest.activities.filter(a => a.id !== activityId);
+                }));
+                saveTripData(tripData); render();
+            });
+        }
+
+        function handleDeleteDestination(destinationId) {
+            const tripData = getTripData();
+            const dest = findDestination(tripData, destinationId);
+            if (dest && dest.activities.length > 0) {
+                showInfoModal('Cannot Delete Destination', 'Please remove all activities from this destination before deleting it.');
+                return;
+            }
+            showConfirmModal('Delete this destination?', 'This cannot be undone.', () => {
+                tripData.days.forEach(day => {
+                    day.destinations = day.destinations.filter(d => d.id !== destinationId);
+                });
+                saveTripData(tripData); render();
+            });
+        }
+
+        function handleAddActivity(destinationId) {
+            const tripData = getTripData();
+            const destination = findDestination(tripData, destinationId);
+            if (!destination) return;
+
+            const hasEmpty = destination.activities.some(a => a.text.trim() === '');
+            if (hasEmpty) return;
+
+            const newActivity = { id: `activity-${Date.now()}`, text: '', description: '', completed: false, rating: 0 };
+            destination.activities.push(newActivity);
+            saveTripData(tripData);
+            render();
+
+            const newLi = document.getElementById(newActivity.id);
+            if (newLi) {
+                newLi.querySelector('.item-text').focus();
+            }
+        }
+
+        function handleAddDestination(dayId) {
+            const tripData = getTripData();
+            const day = tripData.days.find(d => d.id === dayId);
+            if (day) {
+                day.destinations.push({ id: `dest-${Date.now()}`, title: '📍 New Destination', activities: [] });
+                saveTripData(tripData); render();
+            }
+        }
+
+        function handleAddDay() {
+            const tripData = getTripData();
+            const newDayNum = tripData.days.length + 1;
+            const newDay = {
+                id: `day-${Date.now()}`, title: `Day ${newDayNum}: New Adventures`,
+                colorClass: dayColorPalette[tripData.days.length % dayColorPalette.length], destinations: [], isCollapsed: false
+            };
+            tripData.days.push(newDay);
+            saveTripData(tripData); render();
+        }
+
+        function handleDeleteDay(dayId) {
+            const tripData = getTripData();
+            const day = tripData.days.find(d => d.id === dayId);
+            if (day && day.destinations.length > 0) {
+                showInfoModal('Cannot Delete Day', 'Please remove all destinations from this day before deleting it.');
+                return;
+            }
+            showConfirmModal('Delete this entire day?', 'All destinations and activities for this day will be lost.', () => {
+                let tripData = getTripData();
+                tripData.days = tripData.days.filter(d => d.id !== dayId);
+                saveTripData(tripData); render();
+            });
+        }
+
+        function handleMoveDay(dayId, direction) {
+            const tripData = getTripData();
+            const index = tripData.days.findIndex(d => d.id === dayId);
+            if (direction === 'up' && index > 0) {
+                [tripData.days[index], tripData.days[index - 1]] = [tripData.days[index - 1], tripData.days[index]];
+            } else if (direction === 'down' && index < tripData.days.length - 1) {
+                [tripData.days[index], tripData.days[index + 1]] = [tripData.days[index + 1], tripData.days[index]];
+            }
+            saveTripData(tripData);
+            render();
+        }
+
+        function handleExport() {
+            const tripData = getTripData();
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(tripData, null, 2));
+            const downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", dataStr);
+            downloadAnchorNode.setAttribute("download", "trip_plan.json");
+            document.body.appendChild(downloadAnchorNode);
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+            toggleMenu(false);
+        }
+
+        function handleImport() {
+            document.getElementById('import-uploader').click();
+            toggleMenu(false);
+        }
+
+        function processImport(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    if (importedData.title && Array.isArray(importedData.days)) {
+                        saveTripData(importedData);
+                        render();
+                    } else {
+                        alert('Invalid trip plan file.');
+                    }
+                } catch (error) {
+                    alert('Could not read the trip plan file.');
+                    console.error("Import error:", error);
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+
+        function handleClearJournal() {
+            showConfirmModal('Clear Entire Journal?', 'This will permanently delete all days and activities.', () => {
+                saveTripData(clearedData);
+                render();
+                toggleMenu(false);
+            });
+        }
+
+        function findActivity(data, activityId) {
+            for (const day of data.days) for (const dest of day.destinations) {
+                const activity = dest.activities.find(a => a.id === activityId);
+                if (activity) return activity;
+            } return null;
+        }
+        function findDestination(data, destinationId) {
+            for (const day of data.days) {
+                const dest = day.destinations.find(d => d.id === destinationId);
+                if (dest) return dest;
+            } return null;
+        }
+
+        function showConfirmModal(title, text, onConfirm) {
+            const modal = document.getElementById('confirm-modal');
+            document.getElementById('confirm-title').innerText = title;
+            document.getElementById('confirm-text').innerText = text;
+            modal.classList.add('visible');
+            const confirmBtn = document.getElementById('confirm-btn-action');
+            const cancelBtn = document.getElementById('cancel-btn');
+            const confirmHandler = () => { onConfirm(); hide(); };
+            const hide = () => {
+                modal.classList.remove('visible');
+                confirmBtn.removeEventListener('click', confirmHandler);
+                cancelBtn.removeEventListener('click', hide);
+            };
+            confirmBtn.addEventListener('click', confirmHandler);
+            cancelBtn.addEventListener('click', hide);
+        }
+
+        function showInfoModal(title, text) {
+            const modal = document.getElementById('info-modal');
+            document.getElementById('info-title').innerText = title;
+            document.getElementById('info-text').innerText = text;
+            modal.classList.add('visible');
+            const okBtn = document.getElementById('info-ok-btn');
+            const hide = () => modal.classList.remove('visible');
+            okBtn.onclick = hide;
+        }
+
+        function toggleEditMode(isEdit) {
+            if (!isEdit) {
+                const tripData = getTripData();
+                let wasChanged = false;
+                tripData.days.forEach(day => {
+                    day.destinations.forEach(dest => {
+                        const originalCount = dest.activities.length;
+                        dest.activities = dest.activities.filter(a => a.text.trim() !== '');
+                        if (dest.activities.length !== originalCount) {
+                            wasChanged = true;
+                        }
+                    });
+                });
+                if (wasChanged) {
+                    saveTripData(tripData);
+                    render();
+                }
+            }
+
+            document.body.classList.toggle('edit-mode', isEdit);
+            document.querySelectorAll('.day-header, .destination-header, #main-title, #main-subtitle').forEach(el => {
+                el.contentEditable = isEdit;
+            });
+            document.querySelectorAll('.item-text, .item-description').forEach(el => {
+                el.contentEditable = isEdit;
+            });
+        }
+
+        function toggleMenu(forceState) {
+            const menu = document.getElementById('hamburger-menu');
+            const overlay = document.getElementById('menu-overlay');
+            const shouldOpen = forceState !== undefined ? forceState : !menu.classList.contains('open');
+            menu.classList.toggle('open', shouldOpen);
+            overlay.classList.toggle('open', shouldOpen);
+        }
+
+        function setTheme(themeName) {
+            document.body.className = themeName;
+            localStorage.setItem(appPrefix + 'theme', themeName);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!localStorage.getItem(appPrefix + 'tripData')) saveTripData(initialData);
+
+            const editToggle = document.getElementById('edit-mode-toggle');
+            editToggle.onchange = (e) => toggleEditMode(e.target.checked);
+
+            const themeSelect = document.getElementById('theme-select');
+            const savedTheme = localStorage.getItem(appPrefix + 'theme') || 'theme-summer';
+            setTheme(savedTheme);
+            themeSelect.value = savedTheme;
+            themeSelect.onchange = (e) => setTheme(e.target.value);
+
+            document.querySelector('.add-day-btn').onclick = handleAddDay;
+            document.getElementById('main-title').onblur = (e) => { let data = getTripData(); data.title = e.target.innerText; saveTripData(data); };
+            document.getElementById('main-subtitle').onblur = (e) => { let data = getTripData(); data.subtitle = e.target.innerText; saveTripData(data); };
+
+            document.getElementById('menu-btn').onclick = () => toggleMenu();
+            document.getElementById('menu-overlay').onclick = () => toggleMenu(false);
+            document.getElementById('export-btn').onclick = handleExport;
+            document.getElementById('import-btn').onclick = handleImport;
+            document.getElementById('import-uploader').onchange = processImport;
+            document.getElementById('clear-btn').onclick = handleClearJournal;
+
+            render();
+        });
+    </script>
+</body>
 </html>
+
